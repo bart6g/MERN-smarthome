@@ -21,11 +21,23 @@ const Login = () => {
             "http://localhost:5000/users/login",
             loginUser
           );
+          // const sensorRes = await Axios.get('http://localhost:5000/sensor/', {params:{userId:loginRes.data.user.userId}}, {headers:{'x-auth-token': loginRes.data.token}})
+          localStorage.setItem("auth-token", loginRes.data.token);
+          const sensorResponse = await Axios({
+            method: 'get',
+            url: 'http://localhost:5000/sensor/',
+            headers: {"x-auth-token": localStorage.getItem('auth-token'),
+            "content-type": "application/json" },
+            params: {
+                'userId': loginRes.data.user.id
+            }
+        })
+          console.log(loginRes.data.user)
           setUserData({
             token: loginRes.data.token,
             user: loginRes.data.user,
+            sensors: sensorResponse.data
           });
-          localStorage.setItem("auth-token", loginRes.data.token);
           history.push("/");
         } catch (err) {
           // console.log(err)

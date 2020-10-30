@@ -2,7 +2,20 @@ const auth = require('../middlewares/auth')
 const Sensor = require('../models/Sensor')
 const router = require('express').Router();
 
-router.post('/add',auth, async(req,res) => {
+router.get('/', auth, async (req,res)=>{
+  const userId = req.query.userId;
+  // console.log(userId)
+  console.log('userId')
+  console.log(userId)
+  const sensors = await Sensor.find({userId: userId})
+  res.json(sensors)
+})
+
+router.get('/:id',async(req,res)=>{
+
+})
+
+router.post('/add', auth, async(req,res) => {
     try {
       const {userId, name, value} = req.body;
       if (!name || !value) {
@@ -21,12 +34,6 @@ router.post('/add',auth, async(req,res) => {
     }
   })
 
-  router.get('/all', auth, async (req,res)=>{
-    const {userId} = req.body;
-    console.log(userId)
-    const sensors = await Sensor.find({userId: userId})
-    res.json(sensors)
-  })
 
 
   module.exports = router

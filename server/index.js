@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors')
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser')
 const userRouter = require('./routes/userRouter')
 const userSensorRouter = require('./routes/userSensorRouter')
 require('dotenv').config();
@@ -8,6 +9,8 @@ require('dotenv').config();
 //set up express
 const app = express();
 
+app.use(bodyParser.json()); 
+// app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.json())
 app.use(cors());
 
