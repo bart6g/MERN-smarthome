@@ -178,6 +178,19 @@ h1 {
   border: 2px solid black;
 }
 
+.auth-options {
+  position: relative;
+}
+.sensor-form {
+  width: 500px;
+  height: 500px;
+  position: absolute;
+  background-color: green;
+  top: 500px;
+  right: 50%;
+  transform: translate(-50%, -50%);
+}
+
 /* media queries */
 
 @media screen and (max-width: 550px) {

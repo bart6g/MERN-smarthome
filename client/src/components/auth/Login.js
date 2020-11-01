@@ -32,7 +32,6 @@ const Login = () => {
                 'userId': loginRes.data.user.id
             }
         })
-          console.log(loginRes.data.user)
           setUserData({
             token: loginRes.data.token,
             user: loginRes.data.user,
