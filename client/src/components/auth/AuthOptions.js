@@ -32,6 +32,7 @@ const AuthOptions = () => {
             {
                 userData.user ? 
                 <>
+                <button>Add Sensor</button>
                 <button onClick={showSensor}>My Sensors</button>
                 <button onClick={logOut}>Log Out</button>
                 </> : (

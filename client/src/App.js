@@ -16,6 +16,31 @@ const App = () => {
         sensors: undefined
     })
 
+    const fetchData = async(user,token,id)=>{
+        //funkcja do ogólnego pobierania danych sensorów (potrzeba ja wywołać, gdy usuwa,doda,edytuje się sensor w celu aktualizacji stanu aplikacji REACT)
+        console.log(id)
+        console.log('user from fetch')
+        console.log(user)
+
+        const sensorResponse = await axios({
+            method: 'get',
+            url: 'http://localhost:5000/sensor/',
+            headers: {"x-auth-token": localStorage.getItem('auth-token'),
+            "content-type": "application/json" },
+            params: {
+                'userId': id
+            }
+        })
+        console.log('sensor response')
+        console.log(sensorResponse)
+
+        setUserData({
+            token: token,
+            user: user,
+            sensors: sensorResponse.data
+        })
+    }
+
     useEffect(()=>{
         const checkLoggedIn = async () => {
             let token = localStorage.getItem('auth-token')
@@ -49,7 +74,7 @@ const App = () => {
     return (
         <>
             <BrowserRouter>
-            <UserContext.Provider value={{userData, setUserData}}>
+            <UserContext.Provider value={{userData, setUserData,fetchData}}>
                 <Header />
                 <div className="container">
 

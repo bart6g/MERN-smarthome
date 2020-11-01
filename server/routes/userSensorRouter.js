@@ -4,15 +4,20 @@ const router = require('express').Router();
 
 router.get('/', auth, async (req,res)=>{
   const userId = req.query.userId;
-  // console.log(userId)
-  console.log('userId')
   console.log(userId)
   const sensors = await Sensor.find({userId: userId})
   res.json(sensors)
 })
 
-router.get('/:id',async(req,res)=>{
-
+router.post('/delete', auth, async(req,res)=>{
+    const id = req.query.id;
+    await Sensor.findByIdAndDelete(id, (err,data)=>{
+      if(err) {
+        console.log(err)
+      } else{
+        res.json(data)
+      }
+    })
 })
 
 router.post('/add', auth, async(req,res) => {
