@@ -3,62 +3,67 @@ import { useHistory } from "react-router-dom";
 import UserContext from "../../context/UserContext";
 import Axios from "axios";
 import ErrorNotice from "../other/ErrorNotice";
+import TextField from "@material-ui/core/TextField";
 
 const Login = () => {
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [error, setError] = useState();
 
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
-    const [error, setError] = useState();
-  
-    const { setUserData } = useContext(UserContext);
-    const history = useHistory();
+  const { setUserData } = useContext(UserContext);
+  const history = useHistory();
 
-    const submit = async (e) => {
-        e.preventDefault();
-        try {
-          const loginUser = { email, password };
-          const loginRes = await Axios.post(
-            "http://localhost:5000/users/login",
-            loginUser
-          );
-          // const sensorRes = await Axios.get('http://localhost:5000/sensor/', {params:{userId:loginRes.data.user.userId}}, {headers:{'x-auth-token': loginRes.data.token}})
-          localStorage.setItem("auth-token", loginRes.data.token);
-          const sensorResponse = await Axios({
-            method: 'get',
-            url: 'http://localhost:5000/sensor/',
-            headers: {"x-auth-token": localStorage.getItem('auth-token'),
-            "content-type": "application/json" },
-            params: {
-                'userId': loginRes.data.user.id
-            }
-        })
-          setUserData({
-            token: loginRes.data.token,
-            user: loginRes.data.user,
-            sensors: sensorResponse.data
-          });
-          history.push("/");
-        } catch (err) {
-          // console.log(err)
-          err.response.data.msg && setError(err.response.data.msg);
-        }
-      };
+  const submit = async (e) => {
+    e.preventDefault();
+    try {
+      const loginUser = { email, password };
+      const loginRes = await Axios.post(
+        "http://localhost:5000/users/login",
+        loginUser
+      );
+      // const sensorRes = await Axios.get('http://localhost:5000/sensor/', {params:{userId:loginRes.data.user.userId}}, {headers:{'x-auth-token': loginRes.data.token}})
+      localStorage.setItem("auth-token", loginRes.data.token);
+      const sensorResponse = await Axios({
+        method: "get",
+        url: "http://localhost:5000/sensor/",
+        headers: {
+          "x-auth-token": localStorage.getItem("auth-token"),
+          "content-type": "application/json",
+        },
+        params: {
+          userId: loginRes.data.user.id,
+        },
+      });
+      setUserData({
+        token: loginRes.data.token,
+        user: loginRes.data.user,
+        sensors: sensorResponse.data,
+      });
+      history.push("/");
+    } catch (err) {
+      // console.log(err)
+      err.response.data.msg && setError(err.response.data.msg);
+    }
+  };
 
-
-    return (
-         <div className="page">
+  return (
+    <div className="page">
       <h2>Log in</h2>
       {error && (
         <ErrorNotice message={error} clearError={() => setError(undefined)} />
       )}
       <form className="form" onSubmit={submit}>
         <label htmlFor="login-email">Email</label>
-        <input
+        {/* <input
           id="login-email"
           type="email"
           onChange={(e) => setEmail(e.target.value)}
+        /> */}
+        <TextField
+          id="standard-basic"
+          label="Standard"
+          onChange={(e) => setEmail(e.target.value)}
         />
-
         <label htmlFor="login-password">Password</label>
         <input
           id="login-password"
@@ -69,7 +74,7 @@ const Login = () => {
         <input type="submit" value="Log in" />
       </form>
     </div>
-    );
+  );
 };
 
 export default Login;

@@ -1,45 +1,48 @@
-import React, {useState, useContext} from 'react';
-import {useHistory} from "react-router-dom"
-import axios from "axios"
-import ErrorNotice from "../other/ErrorNotice"
-import UserContext from "../../context/UserContext"
-
+import React, { useState, useContext } from "react";
+import { useHistory } from "react-router-dom";
+import axios from "axios";
+import ErrorNotice from "../other/ErrorNotice";
+import UserContext from "../../context/UserContext";
 
 const Register = () => {
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
-    const [passwordCheck, setPasswordCheck] = useState();
-    const [displayName, setDisplayName] = useState();
-    const [error, setError] = useState();
-    const {setUserData} = useContext(UserContext)
-    const history = useHistory()
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [passwordCheck, setPasswordCheck] = useState();
+  const [displayName, setDisplayName] = useState();
+  const [error, setError] = useState();
+  const { setUserData } = useContext(UserContext);
+  const history = useHistory();
 
-    const submit = async (e) => {
-        e.preventDefault();
+  const submit = async (e) => {
+    e.preventDefault();
 
-        try{
-        const newUser = {
-            email,password,passwordCheck,displayName
-        }
-        await axios.post("http://localhost:5000/users/register", newUser);
-        const loginRes = await axios.post('http://localhost:5000/users/login', {email, password})
-        setUserData({
-            token: loginRes.data.token,
-            user: loginRes.data.user
-        })
-        localStorage.setItem('auth-token', loginRes.data.token);
-        history.push('/')
-        } catch (err) {
-            console.log(err.response.data.msg)
-            err.response.data.msg && setError(err.response.data.msg)
-        }
+    try {
+      const newUser = {
+        email,
+        password,
+        passwordCheck,
+        displayName,
+      };
+      await axios.post("http://localhost:5000/users/register", newUser);
+      const loginRes = await axios.post("http://localhost:5000/users/login", {
+        email,
+        password,
+      });
+      setUserData({
+        token: loginRes.data.token,
+        user: loginRes.data.user,
+      });
+      localStorage.setItem("auth-token", loginRes.data.token);
+      history.push("/");
+    } catch (err) {
+      console.log(err.response.data.msg);
+      err.response.data.msg && setError(err.response.data.msg);
     }
-    return (
-        <div className="page">
+  };
+  return (
+    <div className="page">
       <h2>Register</h2>
-      {error && (
-        <ErrorNotice message={error} clearError={() => setError('')} />
-      )}
+      {error && <ErrorNotice message={error} clearError={() => setError("")} />}
       <form className="form" onSubmit={submit}>
         <label htmlFor="register-email">Email</label>
         <input
@@ -70,7 +73,7 @@ const Register = () => {
         <input type="submit" value="Register" />
       </form>
     </div>
-    );
+  );
 };
 
 export default Register;

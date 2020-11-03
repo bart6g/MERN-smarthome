@@ -1,34 +1,38 @@
-const express = require('express');
-const cors = require('cors')
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser')
-const userRouter = require('./routes/userRouter')
-const userSensorRouter = require('./routes/userSensorRouter')
-require('dotenv').config();
+const express = require("express");
+const cors = require("cors");
+const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+const userRouter = require("./routes/userRouter");
+const userSensorRouter = require("./routes/userSensorRouter");
+require("dotenv").config();
 
 //set up express
 const app = express();
 
-app.use(bodyParser.json()); 
+app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({extended: true}));
-app.use(express.json())
+app.use(express.json());
 app.use(cors());
 
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT || 5000;
 
-//set up mongoose 
+//set up mongoose
 
-mongoose.connect(process.env.MONGODB_CONNECTION_STRING, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }, (err) => {
+mongoose.connect(
+  process.env.MONGODB_CONNECTION_STRING,
+  { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true },
+  (err) => {
     if (err) throw err;
-    console.log('Mongodb connection established successfully')
-})
+    console.log("Mongodb connection established successfully");
+  }
+);
 
-app.use('/users', userRouter)
-app.use('/sensor', userSensorRouter)
+app.use("/users", userRouter);
+app.use("/sensor", userSensorRouter);
 
-app.get('/', (req, res) => {
-    res.send('hello')
-})
+app.get("/", (req, res) => {
+  res.send("hello");
+});
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`)
-})
+  console.log(`Server is running on port ${PORT}`);
+});

@@ -56,11 +56,11 @@ body {
 /* header */
 
 #header {
-  height: 50px;
+  height: 100px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #e02525;
+  background-color: gray;
 }
 #header .title {
   margin: 0;
@@ -68,18 +68,16 @@ body {
   color: #ffffff;
 }
 #header .auth-options {
-  height: 100%;
   display: flex;
 }
 #header .auth-options button {
-  padding: 0 1rem;
-  background-color: #b91b1b;
-  color: #ffffff;
+  margin: 0 1rem;
   font-size: 1.1rem;
 }
-#header .auth-options button:hover {
+
+/* #header .auth-options button:hover {
   background-color: #be3a3a;
-}
+} */
 
 /* form */
 
@@ -93,7 +91,8 @@ body {
 .form label {
   margin-bottom: 0.2rem;
 }
-.form input[type="text"],
+*/
+/* .form input[type="text"],
 .form input[type="email"],
 .form input[type="password"] {
   width: 100%;
