@@ -10,18 +10,22 @@ const AddSensor = ({ setOpened }) => {
   //new Sensor properties
 
   const [name, setName] = useState("");
-  const [value, setValue] = useState("");
+  const [topic, setTopic] = useState("temperature");
 
   const handleClose = () => {
     setOpened(false);
   };
+
+  const handleTopic = (e) => {
+    setTopic(e.target.value);
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newSensor = {
       userId: id,
       name,
-      value,
+      topic
     };
 
     const sensorResponse = await axios.post(
@@ -49,13 +53,11 @@ const AddSensor = ({ setOpened }) => {
           onChange={(e) => setName(e.target.value)}
         />
 
-        <label htmlFor="login-email">Sensor Initial Value</label>
-        <input
-          id="login-email"
-          type="text"
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-        />
+        <select name="topic" id="topic" onChange={(e)=>handleTopic(e)}>
+          <option value="temperature">Temperature</option>
+          <option value="humidity">Humidity</option>
+          <option value="dogfood">Dog Food</option>
+        </select>
 
         <input type="submit" value="Submit" />
       </form>

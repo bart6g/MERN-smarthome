@@ -11,7 +11,7 @@ const Sensors = () => {
     return (
         <div className="sensors-container">
             <button onClick={()=>console.log(sensors)}>sensors</button>
-            {sensors!==undefined ?sensors.map(sensor=><SensorBox name={sensor.name} key={sensor._id} id={sensor._id} value={sensor.value}/>) : null }     
+            {sensors!==undefined ?sensors.map(sensor=><SensorBox name={sensor.name} topic={sensor.topic} key={sensor._id} id={sensor._id} />) : null }     
         </div>
     );
 };

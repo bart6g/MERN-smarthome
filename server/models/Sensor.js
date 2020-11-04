@@ -5,7 +5,7 @@ const sensorSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
   },
   name: { type: String, required: true },
-  value: { type: Object, required: true },
+  topic: { type: String, required: true },
 });
 
 module.exports = Sensor = mongoose.model("sensor", sensorSchema);
