@@ -6,16 +6,10 @@ const DogFood = require("../models/DogFood");
 const router = require("express").Router();
 
 router.get("/", auth, async (req, res) => {
-  try {
-    const userId = req.query.userId;
-    console.log(userId);
-    const sensors = await Sensor.find({ userId: userId });
-    const dogs = await DogFood.find({});
-    console.log(dogs);
-    res.json(sensors);
-  } catch (e) {
-    console.log(e.message);
-  }
+  const userId = req.query.userId;
+  console.log(userId);
+  const sensors = await Sensor.find({ userId: userId });
+  res.json(sensors);
 });
 
 router.post("/delete", auth, async (req, res) => {
@@ -61,16 +55,15 @@ router.get("/data", auth, async (req, res) => {
       res.json("no topic entered");
     }
     if (topic === "humidity") {
-      const humData = await Humidity.find({});
-      console.log(humData);
+      const humData = await Humidity.find({ sensorId: sensorId }).limit(100);
       res.json(humData);
     } else if (topic === "temperature") {
-      const tempData = await Temperature.find({ sensorId: sensorId });
-      console.log(tempData);
+      const tempData = await Temperature.find({ sensorId: sensorId }).limit(
+        100
+      );
       res.json(tempData);
     } else if (topic === "dogfood") {
-      const dogData = await DogFood.find({ sensorId: sensorId });
-      console.log(dogData);
+      const dogData = await DogFood.find({ sensorId: sensorId }).limit(100);
       res.json(dogData);
     }
   } catch (err) {

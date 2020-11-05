@@ -38,6 +38,7 @@ const Login = () => {
         token: loginRes.data.token,
         user: loginRes.data.user,
         sensors: sensorResponse.data,
+        sensorData: undefined,
       });
       history.push("/");
     } catch (err) {

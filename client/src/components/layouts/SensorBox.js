@@ -1,10 +1,13 @@
 import React, { useContext } from "react";
 import UserContext from "../../context/UserContext";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 const SensorBox = ({ name, topic, id }) => {
-  const { userData, setUserData, fetchData } = useContext(UserContext);
-
+  const { userData, setUserData, fetchData, getDataForOneSensor } = useContext(
+    UserContext
+  );
+  const history = useHistory();
   const { token, user } = userData;
 
   const handleDelete = async (user, token, id) => {
@@ -23,20 +26,9 @@ const SensorBox = ({ name, topic, id }) => {
     fetchData(user, token, user.id);
   };
 
-  const handleData = async (topic, id) => {
-    const dataResponse = await axios({
-      method: "get",
-      url: "http://localhost:5000/sensor/data",
-      headers: {
-        "x-auth-token": localStorage.getItem("auth-token"),
-        "content-type": "application/json",
-      },
-      params: {
-        topic: topic,
-        sensorId: id,
-      },
-    });
-    console.log(dataResponse);
+  const showData = (userData, topic, id) => {
+    getDataForOneSensor(topic, id, userData);
+    history.push(`/sensors/${id}`);
   };
 
   return (
@@ -46,7 +38,7 @@ const SensorBox = ({ name, topic, id }) => {
 
       <div className="btns">
         <button onClick={() => handleDelete(user, token, id)}>Usuń</button>
-        <button onClick={() => handleData(topic, id)}>Show Data</button>
+        <button onClick={() => showData(userData, topic, id)}>Show Data</button>
       </div>
     </div>
   );

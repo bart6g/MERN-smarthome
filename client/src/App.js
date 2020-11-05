@@ -6,6 +6,7 @@ import Home from "./components/pages/Home";
 import Header from "./components/layouts/Header";
 import Sensors from "./components/pages/Sensors";
 import UserContext from "./context/UserContext";
+import SensorData from "./components/layouts/SensorData";
 import axios from "axios";
 
 const App = () => {
@@ -13,6 +14,7 @@ const App = () => {
     token: undefined,
     user: undefined,
     sensors: undefined,
+    sensorData: undefined,
   });
 
   const fetchData = async (user, token, id) => {
@@ -32,14 +34,39 @@ const App = () => {
         userId: id,
       },
     });
-    console.log("sensor response");
-    console.log(sensorResponse);
-
     setUserData({
       token: token,
       user: user,
       sensors: sensorResponse.data,
+      sensorData: undefined,
     });
+  };
+
+  const getDataForOneSensor = async (topic, id, data) => {
+    console.log("getdatafunction");
+    const { user, token, sensors } = data;
+    const dataResponse = await axios({
+      method: "get",
+      url: "http://localhost:5000/sensor/data",
+      headers: {
+        "x-auth-token": localStorage.getItem("auth-token"),
+        "content-type": "application/json",
+      },
+      params: {
+        topic: topic,
+        sensorId: id,
+      },
+    });
+
+    if (dataResponse) {
+      setUserData({
+        token: token,
+        user: user,
+        sensors: sensors,
+        sensorData: dataResponse.data,
+      });
+      console.log(userData);
+    }
   };
 
   useEffect(() => {
@@ -67,6 +94,8 @@ const App = () => {
           setUserData({
             token,
             user: userResponse.data,
+            sensors: undefined,
+            sensorData: undefined,
           });
         } catch (err) {
           console.log(err.message);
@@ -79,14 +108,17 @@ const App = () => {
   return (
     <>
       <BrowserRouter>
-        <UserContext.Provider value={{ userData, setUserData, fetchData }}>
+        <UserContext.Provider
+          value={{ userData, setUserData, fetchData, getDataForOneSensor }}
+        >
           <Header />
           <div className="container">
             <Switch>
               <Route path="/" exact component={Home} />
               <Route path="/login" component={Login} />
               <Route path="/register" component={Register} />
-              <Route path="/sensors" component={Sensors} />
+              <Route path="/sensors" exact component={Sensors} />
+              <Route path="/sensors/:id" component={SensorData} />
             </Switch>
           </div>
         </UserContext.Provider>
