@@ -9,9 +9,9 @@ const AuthOptions = () => {
   const [opened, setOpened] = useState(false);
   const history = useHistory();
 
-  const handleOpen = () => {
-    setOpened(true);
-  };
+  // const handleOpen = () => {
+  //   setOpened(true);
+  // };
 
   const register = () => {
     history.push("/register");
@@ -32,6 +32,10 @@ const AuthOptions = () => {
   const showSensor = () => {
     history.push("/sensors");
   };
+
+  const routeAdd = () => {
+    history.push("/addsensor");
+  };
   return (
     <div className="auth-options">
       {userData.user ? (
@@ -39,7 +43,7 @@ const AuthOptions = () => {
           <Button
             variant="contained"
             color="secondary"
-            onClick={() => handleOpen()}
+            onClick={() => routeAdd()}
           >
             Add Sensor
           </Button>

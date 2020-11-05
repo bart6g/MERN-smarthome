@@ -8,6 +8,7 @@ import Sensors from "./components/pages/Sensors";
 import UserContext from "./context/UserContext";
 import SensorData from "./components/layouts/SensorData";
 import axios from "axios";
+import AddSensor from "./components/layouts/AddSensor";
 
 const App = () => {
   const [userData, setUserData] = useState({
@@ -15,6 +16,7 @@ const App = () => {
     user: undefined,
     sensors: undefined,
     sensorData: undefined,
+    actualTopic: undefined,
   });
 
   const fetchData = async (user, token, id) => {
@@ -39,6 +41,7 @@ const App = () => {
       user: user,
       sensors: sensorResponse.data,
       sensorData: undefined,
+      actualTopic: undefined,
     });
   };
 
@@ -64,6 +67,7 @@ const App = () => {
         user: user,
         sensors: sensors,
         sensorData: dataResponse.data,
+        actualTopic: topic,
       });
       console.log(userData);
     }
@@ -119,6 +123,7 @@ const App = () => {
               <Route path="/register" component={Register} />
               <Route path="/sensors" exact component={Sensors} />
               <Route path="/sensors/:id" component={SensorData} />
+              <Route path="/addsensor" component={AddSensor} />
             </Switch>
           </div>
         </UserContext.Provider>

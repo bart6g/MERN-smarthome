@@ -3,6 +3,8 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import ErrorNotice from "../other/ErrorNotice";
 import UserContext from "../../context/UserContext";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
 
 const Register = () => {
   const [email, setEmail] = useState();
@@ -44,14 +46,42 @@ const Register = () => {
       <h2>Register</h2>
       {error && <ErrorNotice message={error} clearError={() => setError("")} />}
       <form className="form" onSubmit={submit}>
-        <label htmlFor="register-email">Email</label>
-        <input
+        <TextField
+          id="standard-basic"
+          label="Email"
+          onChange={(e) => setEmail(e.target.value)}
+        />
+
+        <TextField
+          id="standard-basic"
+          label="Password"
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <TextField
+          id="standard-basic"
+          label="Verify password"
+          onChange={(e) => setPasswordCheck(e.target.value)}
+        />
+        <TextField
+          id="standard-basic"
+          label="Display name"
+          onChange={(e) => setDisplayName(e.target.value)}
+        />
+        <Button
+          variant="contained"
+          color="secondary"
+          type="submit"
+          className="login"
+        >
+          Register
+        </Button>
+
+        {/* <input
           id="register-email"
           type="email"
           onChange={(e) => setEmail(e.target.value)}
         />
 
-        <label htmlFor="register-password">Password</label>
         <input
           id="register-password"
           type="password"
@@ -63,14 +93,13 @@ const Register = () => {
           onChange={(e) => setPasswordCheck(e.target.value)}
         />
 
-        <label htmlFor="register-display-name">Display name</label>
         <input
           id="register-display-name"
           type="text"
           onChange={(e) => setDisplayName(e.target.value)}
         />
 
-        <input type="submit" value="Register" />
+        <input type="submit" value="Register" /> */}
       </form>
     </div>
   );

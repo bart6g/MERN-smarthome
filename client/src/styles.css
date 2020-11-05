@@ -81,15 +81,30 @@ body {
 
 /* form */
 
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+  max-width: 600px;
+  justify-content: center;
+}
 .form label,
 .form input {
   display: block;
+  width: 100%;
 }
 .form input {
   margin-bottom: 1rem;
 }
 .form label {
   margin-bottom: 0.2rem;
+}
+.login {
+  width: 500px;
+}
+button[type="submit"] {
+  margin: 20px;
+  width: 150px;
 }
 */
 /* .form input[type="text"],

@@ -4,6 +4,7 @@ import UserContext from "../../context/UserContext";
 import Axios from "axios";
 import ErrorNotice from "../other/ErrorNotice";
 import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
 
 const Login = () => {
   const [email, setEmail] = useState();
@@ -39,6 +40,7 @@ const Login = () => {
         user: loginRes.data.user,
         sensors: sensorResponse.data,
         sensorData: undefined,
+        actualTopic: undefined,
       });
       history.push("/");
     } catch (err) {
@@ -54,7 +56,6 @@ const Login = () => {
         <ErrorNotice message={error} clearError={() => setError(undefined)} />
       )}
       <form className="form" onSubmit={submit}>
-        <label htmlFor="login-email">Email</label>
         {/* <input
           id="login-email"
           type="email"
@@ -62,17 +63,23 @@ const Login = () => {
         /> */}
         <TextField
           id="standard-basic"
-          label="Standard"
+          label="Email"
           onChange={(e) => setEmail(e.target.value)}
         />
-        <label htmlFor="login-password">Password</label>
-        <input
-          id="login-password"
-          type="password"
+
+        <TextField
+          id="standard-basic"
+          label="Password"
           onChange={(e) => setPassword(e.target.value)}
         />
-
-        <input type="submit" value="Log in" />
+        <Button
+          variant="contained"
+          color="secondary"
+          type="submit"
+          className="login"
+        >
+          Log in
+        </Button>
       </form>
     </div>
   );
