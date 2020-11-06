@@ -4,7 +4,7 @@ const Humidity = require("../models/Humidity");
 const Temperature = require("../models/Temperature");
 const DogFood = require("../models/DogFood");
 const router = require("express").Router();
-
+JWT_SECRET = `*LZ#uu]C{Z'RTAty<)gb9N[ch)V*t8{F=!afk.(=z#KnTQ:Aq%`;
 router.get("/", auth, async (req, res) => {
   const userId = req.query.userId;
   console.log(userId);
@@ -55,15 +55,19 @@ router.get("/data", auth, async (req, res) => {
       res.json("no topic entered");
     }
     if (topic === "humidity") {
-      const humData = await Humidity.find({ sensorId: sensorId }).limit(100);
+      const humData = await Humidity.find({ sensorId: sensorId })
+        // .sort("date", -1)
+        .limit(100);
       res.json(humData);
     } else if (topic === "temperature") {
-      const tempData = await Temperature.find({ sensorId: sensorId }).limit(
-        100
-      );
+      const tempData = await Temperature.find({ sensorId: sensorId })
+        // .sort("date", -1)
+        .limit(100);
       res.json(tempData);
     } else if (topic === "dogfood") {
-      const dogData = await DogFood.find({ sensorId: sensorId }).limit(100);
+      const dogData = await DogFood.find({ sensorId: sensorId })
+        // .sort("date", -1)
+        .limit(100);
       res.json(dogData);
     }
   } catch (err) {

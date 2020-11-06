@@ -71,6 +71,8 @@ const App = () => {
       });
       console.log(userData);
     }
+    console.log("data response");
+    console.log(dataResponse);
   };
 
   useEffect(() => {

@@ -101,6 +101,14 @@ const SensorBox = ({ name, topic, id }) => {
           >
             Plot
           </Button>
+          <button
+            onClick={() => {
+              console.log(userData);
+              console.log(topic);
+            }}
+          >
+            data
+          </button>
         </CardActions>
       </Card>
     </>
