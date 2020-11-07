@@ -12,6 +12,8 @@ import Typography from "@material-ui/core/Typography";
 const useStyles = makeStyles({
   root: {
     minWidth: 275,
+    minHeight: 350,
+    padding: 20,
   },
   bullet: {
     display: "inline-block",

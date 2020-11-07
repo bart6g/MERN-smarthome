@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import UserContext from "../../context/UserContext";
 import LineChart from "../chart/LineChart";
+import Button from "@material-ui/core/Button";
 import CanvasJSReact from "../chart/canvasjs.react";
 const CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
@@ -48,7 +49,14 @@ const SensorData = () => {
 
   return (
     <div>
-      <button onClick={() => console.log(data)}>data</button>
+      <Button
+        variant="contained"
+        color="secondary"
+        type="submit"
+        className="login"
+      >
+        Load Data
+      </Button>
       <CanvasJSChart options={options} />
     </div>
   );

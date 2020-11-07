@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const auth = require("../middlewares/auth");
 const Sensor = require("../models/Sensor");
+const JWT_SECRET = `*LZ#uu]C{Z'RTAty<)gb9N[ch)V*t8{F=!afk.(=z#KnTQ:Aq%`;
 
 router.post("/register", async (req, res) => {
   try {
@@ -67,7 +68,7 @@ router.post("/login", async (req, res) => {
       return res.status(400).json({ msg: "invalid email or password" });
     }
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+    const token = jwt.sign({ id: user._id }, JWT_SECRET);
 
     res.json({
       token,
