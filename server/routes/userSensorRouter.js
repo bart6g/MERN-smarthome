@@ -4,12 +4,17 @@ const Humidity = require("../models/Humidity");
 const Temperature = require("../models/Temperature");
 const DogFood = require("../models/DogFood");
 const router = require("express").Router();
-JWT_SECRET = `*LZ#uu]C{Z'RTAty<)gb9N[ch)V*t8{F=!afk.(=z#KnTQ:Aq%`;
+
 router.get("/", auth, async (req, res) => {
-  const userId = req.query.userId;
-  console.log(userId);
-  const sensors = await Sensor.find({ userId: userId });
-  res.json(sensors);
+  try {
+    const userId = req.query.userId;
+    console.log(userId);
+    const sensors = await Sensor.find({ userId: userId });
+    res.json(sensors);
+  } catch (e) {
+    res.json(e.message);
+    console.log(e.message);
+  }
 });
 
 router.post("/delete", auth, async (req, res) => {

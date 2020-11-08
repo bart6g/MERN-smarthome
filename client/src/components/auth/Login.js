@@ -24,11 +24,12 @@ const Login = () => {
       );
       // const sensorRes = await Axios.get('http://localhost:5000/sensor/', {params:{userId:loginRes.data.user.userId}}, {headers:{'x-auth-token': loginRes.data.token}})
       localStorage.setItem("auth-token", loginRes.data.token);
+      const localToken = loginRes.data.token;
       const sensorResponse = await Axios({
         method: "get",
         url: "http://localhost:5000/sensor/",
         headers: {
-          "x-auth-token": localStorage.getItem("auth-token"),
+          "x-auth-token": localToken,
           "content-type": "application/json",
         },
         params: {
