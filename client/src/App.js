@@ -11,6 +11,7 @@ import axios from "axios";
 import AddSensor from "./components/layouts/AddSensor";
 
 const App = () => {
+  //global state
   const [userData, setUserData] = useState({
     token: undefined,
     user: undefined,
